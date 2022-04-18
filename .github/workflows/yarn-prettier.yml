@@ -34,7 +34,7 @@ jobs:
         pr_assignee: "CloneableX"
         github_token: ${{ secrets.GITHUB_TOKEN }}
     - name: echo-open-pr
-      run: echo ${{steps.open-pr.outputs}}
+      run: echo ${{join(steps.open-pr.outputs.*, '\n')}}
     - name: output-url
       run: echo ${{steps.open-pr.outputs.pr_url}}
     - name: output-number
