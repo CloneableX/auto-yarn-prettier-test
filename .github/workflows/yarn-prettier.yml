@@ -22,31 +22,8 @@ jobs:
       with:
         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-    - name: Use Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: "10.24.1"
-
-    - name: Yarn Install
-      run: yarn install
-    - name: Yarn Prettier
-      run: yarn prettier
-
-    - name: Generate Source Branch Name
-      run: echo "SOURCE_BRANCH=github-actions/auto-yarn-prettier-$(date +'%Y%m%d')" >> $GITHUB_ENV
-
-    - name: Commit files
-      run: |
-        git config --local user.email github-actions
-        git config --local user.name github-actions@github.com
-        git commit -am "Auto yarn prettier"
-    - name: Push changes
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: ${{ env.SOURCE_BRANCH }}
-
-    - name: Pull Request
+    - id: open-pr
+      name: Pull Request
       uses: repo-sync/pull-request@v2
       with:
         source_branch: ${{ env.SOURCE_BRANCH }}
@@ -56,3 +33,9 @@ jobs:
         pr_reviewer: "roostinghawk"
         pr_assignee: "CloneableX"
         github_token: ${{ secrets.GITHUB_TOKEN }}
+    - name: output-url
+      run: echo ${{steps.open-pr.outputs.pr_url}}
+    - name: output-number
+      run: echo ${{steps.open-pr.outputs.pr_number}}
+    - name: output-has-changed-files
+      run: echo ${{steps.open-pr.outputs.has_changed_files}}
