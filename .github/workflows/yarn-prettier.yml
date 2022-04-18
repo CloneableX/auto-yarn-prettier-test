@@ -22,7 +22,7 @@ jobs:
       with:
         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-    - id: open-pr
+    - id: open_pr
       name: Pull Request
       uses: repo-sync/pull-request@v2
       with:
@@ -34,7 +34,7 @@ jobs:
         pr_assignee: "CloneableX"
         github_token: ${{ secrets.GITHUB_TOKEN }}
     - name: echo-open-pr
-      run: echo ${{join(steps.open-pr.outputs.*, '\n')}}
+      run: echo ${{join(steps.open_pr.outputs.*, '\n')}}
     - name: output-url
       run: echo ${{steps.open-pr.outputs.pr_url}}
     - name: output-number
