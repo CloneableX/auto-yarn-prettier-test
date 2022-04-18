@@ -69,3 +69,4 @@ jobs:
         MERGE_REMOVE_LABELS: "automerge"
         MERGE_METHOD: "merge"
         MERGE_COMMIT_MESSAGE: "AUTO merge for yarn prettier"
+        LOG: "DEBUG"  # or "DEBUG"
