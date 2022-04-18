@@ -21,7 +21,11 @@ jobs:
       uses: webfactory/ssh-agent@v0.5.3
       with:
         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-    - uses: reitermarkus/automerge@v2
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
+        
+    - id: automerge
+      name: Merge Pull request
+      uses: "pascalgn/automerge-action@v0.15.2"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        PULL_REQUEST: "8"
+        LOG: "DEBUG"  # or "DEBUG"
