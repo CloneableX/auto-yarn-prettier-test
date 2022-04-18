@@ -12,8 +12,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
     - name: Setup
+      uses: actions/checkout@v2
       with:
         ref: develop
 
@@ -58,9 +58,6 @@ jobs:
         pr_assignee: "CloneableX"
         pr_label: "automerge"
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        
-    - name: echo pr number
-      run: echo ${{steps.open-pr.outputs.pr_number}}
 
     - id: automerge
       name: Merge Pull request
@@ -68,5 +65,4 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         MERGE_COMMIT_MESSAGE: "AUTO merge for yarn prettier"
-        PULL_REQUEST: "${{steps.open-pr.outputs.pr_number}}"
         UPDATE_METHOD: "rebase"
