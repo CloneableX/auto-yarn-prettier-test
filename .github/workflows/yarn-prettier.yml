@@ -58,11 +58,14 @@ jobs:
         pr_assignee: "CloneableX"
         pr_label: "automerge"
         github_token: ${{ secrets.GITHUB_TOKEN }}
+        
 
     - id: automerge
       name: Merge Pull request
       uses: "pascalgn/automerge-action@v0.15.2"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        MERGE_LABELS: "automerge"
+        MERGE_REMOVE_LABELS: "automerge"
+        MERGE_METHOD: "merge"
         MERGE_COMMIT_MESSAGE: "AUTO merge for yarn prettier"
-        UPDATE_METHOD: "rebase"
