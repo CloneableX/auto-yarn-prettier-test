@@ -67,8 +67,3 @@ jobs:
         MERGE_COMMIT_MESSAGE: "AUTO merge for yarn prettier"
         PULL_REQUEST: "${{ steps.open-pr.outputs.pr_number }}"
         UPDATE_METHOD: "rebase"
-    
-    - name: Merge PR Feedback
-      if: steps.automerge.outputs.mergeResult == "merged"
-      run: |
-        echo "Pull request ${{ steps.automerge.outputs.pullRequestNumber }} merged!"
