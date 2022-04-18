@@ -46,7 +46,8 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         branch: ${{ env.SOURCE_BRANCH }}
 
-    - name: Pull Request
+    - id: open-pr
+      name: Pull Request
       uses: repo-sync/pull-request@v2
       with:
         source_branch: ${{ env.SOURCE_BRANCH }}
@@ -55,6 +56,7 @@ jobs:
         pr_body: ":crown: *An automated PR*"
         pr_reviewer: "roostinghawk"
         pr_assignee: "CloneableX"
+        pr_label: "automerge"
         github_token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Merge Pull request
@@ -62,5 +64,5 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         MERGE_COMMIT_MESSAGE: "AUTO merge for yarn prettier"
-        UPDATE_LABELS: ""
+        PULL_REQUEST: ${{ steps.open-pr.outputs.pr_number }}
         UPDATE_METHOD: "rebase"
