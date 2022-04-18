@@ -54,7 +54,7 @@ jobs:
         destination_branch: develop
         pr_title: "Auto Yarn Prettier"
         pr_body: ":crown: *An automated PR*"
-        pr_reviewer: "roostinghawk"
+        pr_reviewer: "CloneableX"
         pr_assignee: "CloneableX"
         github_token: ${{ secrets.GITHUB_TOKEN }}
     - name: echo-open-pr
