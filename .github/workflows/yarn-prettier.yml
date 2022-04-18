@@ -22,7 +22,9 @@ jobs:
       with:
         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-    - uses: reitermarkus/automerge@v2
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        dry-run: true
+    - id: automerge
+      name: Merge Pull request
+      uses: "pascalgn/automerge-action@v0.15.2"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        LOG: "DEBUG"  # or "DEBUG"
