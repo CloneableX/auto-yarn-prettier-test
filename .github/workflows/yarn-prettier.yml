@@ -21,11 +21,38 @@ jobs:
       uses: webfactory/ssh-agent@v0.5.3
       with:
         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-        
-    - id: automerge
-      name: Merge Pull request
-      uses: "pascalgn/automerge-action@v0.15.2"
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        PULL_REQUEST: "8"
-        LOG: "DEBUG"  # or "DEBUG"
+
+    - name: Use Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: "10.24.1"
+
+    - name: Yarn Install
+      run: yarn install
+    - name: Yarn Prettier
+      run: yarn prettier
+
+    - name: Generate Source Branch Name
+      run: echo "SOURCE_BRANCH=github-actions/auto-yarn-prettier-$(date +'%Y%m%d')" >> $GITHUB_ENV
+
+    - name: Commit files
+      run: |
+        git config --local user.email github-actions
+        git config --local user.name github-actions@github.com
+        git commit -am "Auto yarn prettier"
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: ${{ env.SOURCE_BRANCH }}
+
+    - name: Pull Request
+      uses: repo-sync/pull-request@v2
+      with:
+        source_branch: ${{ env.SOURCE_BRANCH }}
+        destination_branch: develop
+        pr_title: "Auto Yarn Prettier"
+        pr_body: ":crown: *An automated PR*"
+        pr_reviewer: "roostinghawk"
+        pr_assignee: "CloneableX"
+        github_token: ${{ secrets.GITHUB_TOKEN }}
